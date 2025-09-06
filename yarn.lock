@@ -1807,6 +1807,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google.maps@npm:^3.58.1":
+  version: 3.58.1
+  resolution: "@types/google.maps@npm:3.58.1"
+  checksum: 10c0/0247c61d2aeb216d04ab9392602ef41d58328c6336ed4e9a4e9e69834002e82c116a34def2bf4ceb31c4292f14899815058da4bb8d803147295c6b47c1162621
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^24.3.1":
+  version: 24.3.1
+  resolution: "@types/node@npm:24.3.1"
+  dependencies:
+    undici-types: "npm:~7.10.0"
+  checksum: 10c0/99b86fc32294fcd61136ca1f771026443a1e370e9f284f75e243b29299dd878e18c193deba1ce29a374932db4e30eb80826e1049b9aad02d36f5c30b94b6f928
+  languageName: node
+  linkType: hard
+
 "@types/parse-path@npm:^7.0.0":
   version: 7.0.3
   resolution: "@types/parse-path@npm:7.0.3"
@@ -4751,6 +4767,8 @@ __metadata:
   dependencies:
     "@fontsource/roboto": "npm:^5.2.6"
     "@mdi/font": "npm:^7.4.47"
+    "@types/google.maps": "npm:^3.58.1"
+    "@types/node": "npm:^24.3.1"
     nuxt: "npm:^4.1.0"
     vite-plugin-vuetify: "npm:^2.1.2"
     vue: "npm:^3.5.20"
@@ -6535,6 +6553,13 @@ __metadata:
     magic-string: "npm:^0.30.17"
     unplugin: "npm:^2.1.0"
   checksum: 10c0/08d334fbe51ad4bad4c7b7cc5efec84e61b39ca44e20cda2750a37f20b8e122ed4ce525d6a152b4c463ca1545c38fb556049d8c4ee0299afba4fdb0057d711ee
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.10.0":
+  version: 7.10.0
+  resolution: "undici-types@npm:7.10.0"
+  checksum: 10c0/8b00ce50e235fe3cc601307f148b5e8fb427092ee3b23e8118ec0a5d7f68eca8cee468c8fc9f15cbb2cf2a3797945ebceb1cbd9732306a1d00e0a9b6afa0f635
   languageName: node
   linkType: hard
 

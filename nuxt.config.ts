@@ -21,4 +21,22 @@ export default defineNuxtConfig({
       },
     },
   },
+  app: {
+    head: {
+      script: process.env.GOOGLE_MAPS_API_KEY
+        ? [
+            {
+              src: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places`,
+              async: true,
+              defer: true,
+            },
+          ]
+        : [],
+    },
+  },
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+    },
+  },
 });

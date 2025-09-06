@@ -18,6 +18,8 @@
   },
   "packageManager": "yarn@4.9.4",
   "devDependencies": {
+    "@types/google.maps": "^3.58.1",
+    "@types/node": "^24.3.1",
     "vite-plugin-vuetify": "^2.1.2",
     "vuetify": "^3.9.7"
   }
