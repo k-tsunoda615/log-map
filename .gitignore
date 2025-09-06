@@ -22,3 +22,10 @@ logs
 .env
 .env.*
 !.env.example
+
+# Cursor
+.cursor/
+
+# Vercel
+.vercel/
+
