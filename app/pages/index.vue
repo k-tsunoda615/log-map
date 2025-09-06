@@ -94,7 +94,12 @@
 
           <!-- マップエリア -->
           <v-col cols="12" md="8" lg="6">
-            <div id="map" style="height: 100vh; width: 100%"></div>
+            <MapWrapper
+              :stores="filteredStores"
+              :api-key-exists="hasGoogleMapsApiKey"
+              :get-category-icon="getCategoryIcon"
+              @select="selectStore"
+            />
           </v-col>
 
           <!-- 右カラム: 店舗詳細（PC固定/ SPはボトムシート） -->

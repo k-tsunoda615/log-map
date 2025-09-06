@@ -50,7 +50,12 @@
           >
             Instagramを見る
           </v-btn>
-          <div ref="embedEl" class="mt-2"></div>
+          <v-skeleton-loader
+            v-if="embedLoading"
+            type="image"
+            class="mt-2 skeleton-embed"
+          />
+          <div v-show="!embedLoading" ref="embedEl" class="mt-2"></div>
         </div>
       </v-card-text>
 
@@ -84,6 +89,7 @@ watch(
 watch(internal, (v) => emit("update:modelValue", v));
 
 const embedEl = ref<HTMLElement | null>(null);
+const embedLoading = ref<boolean>(false);
 
 const getCategoryIcon = (category: Store["category"]): string => {
   const icons: Record<Store["category"], string> = {
@@ -108,8 +114,12 @@ const ensureInstagramScript = () => {
 const renderInstagram = (url: string) => {
   if (!embedEl.value) return;
   if (!(window as any).instgrm) return;
+  embedLoading.value = true;
   embedEl.value.innerHTML = `<blockquote class=\"instagram-media\" data-instgrm-permalink=\"${url}\" data-instgrm-version=\"14\"></blockquote>`;
   (window as any).instgrm.Embeds.process();
+  setTimeout(() => {
+    embedLoading.value = false;
+  }, 800);
 };
 
 onMounted(() => {
@@ -120,10 +130,14 @@ watch(
   () => props.store?.instagramUrl,
   (url) => {
     if (!url) return;
-    setTimeout(() => renderInstagram(url), 500);
+    setTimeout(() => renderInstagram(url), 300);
   },
   { immediate: true }
 );
 </script>
 
-<style scoped></style>
+<style scoped>
+.skeleton-embed {
+  min-height: 320px;
+}
+</style>
