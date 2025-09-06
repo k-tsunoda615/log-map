@@ -93,81 +93,23 @@
           </v-col>
 
           <!-- マップエリア -->
-          <v-col cols="12" md="8" lg="9">
+          <v-col cols="12" md="8" lg="6">
             <div id="map" style="height: 100vh; width: 100%"></div>
+          </v-col>
+
+          <!-- 右カラム: 店舗詳細（PC固定/ SPはボトムシート） -->
+          <v-col cols="12" lg="3" class="d-none d-lg-block">
+            <StoreDetailContainer
+              :store="selectedStore"
+              v-model="showStoreDetail"
+            />
           </v-col>
         </v-row>
       </v-container>
     </v-main>
 
-    <!-- 店舗詳細モーダル -->
-    <v-dialog v-model="showStoreDetail" max-width="500px">
-      <v-card v-if="selectedStore">
-        <v-card-title class="d-flex align-center">
-          <v-avatar size="40" color="primary" variant="tonal" class="mr-3">
-            <span class="text-caption">{{
-              getCategoryIcon(selectedStore.category)
-            }}</span>
-          </v-avatar>
-          <div>
-            <div class="text-h6">{{ selectedStore.name }}</div>
-            <div class="text-caption text-medium-emphasis">
-              {{ selectedStore.category }}
-            </div>
-          </div>
-        </v-card-title>
-
-        <v-card-text>
-          <div class="mb-3">
-            <v-icon class="mr-2">mdi-map-marker</v-icon>
-            <span class="text-body2">{{ selectedStore.address }}</span>
-          </div>
-
-          <div class="mb-3">
-            <v-icon class="mr-2">mdi-crosshairs-gps</v-icon>
-            <span class="text-body2">
-              緯度: {{ selectedStore.lat.toFixed(6) }}, 経度:
-              {{ selectedStore.lng.toFixed(6) }}
-            </span>
-          </div>
-
-          <div v-if="!hasGoogleMapsApiKey" class="mb-3">
-            <v-alert type="info" variant="tonal" density="compact">
-              <template #prepend>
-                <v-icon>mdi-information</v-icon>
-              </template>
-              Google Maps API
-              Keyが設定されていないため、地図上での位置確認はできません
-            </v-alert>
-          </div>
-
-          <div v-if="selectedStore.comment" class="mb-3">
-            <v-icon class="mr-2">mdi-comment-text</v-icon>
-            <span class="text-body2">{{ selectedStore.comment }}</span>
-          </div>
-
-          <!-- Instagram埋め込みエリア -->
-          <div v-if="selectedStore.instagramUrl" class="mb-3">
-            <v-btn
-              :href="selectedStore.instagramUrl"
-              target="_blank"
-              color="pink"
-              variant="outlined"
-              prepend-icon="mdi-instagram"
-              class="mb-2"
-            >
-              Instagramを見る
-            </v-btn>
-            <div id="instagram-embed" class="mt-2"></div>
-          </div>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="showStoreDetail = false">閉じる</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <!-- 店舗詳細（SPはボトムシートで表示） -->
+    <StoreDetailContainer :store="selectedStore" v-model="showStoreDetail" />
 
     <!-- About モーダル -->
     <v-dialog v-model="showAbout" max-width="500px">
