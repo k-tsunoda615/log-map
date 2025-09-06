@@ -216,13 +216,20 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from "vue";
-import type { Store, StoreCategory } from "../../types";
+import type { Store } from "~/types";
+import { useStores } from "~/composables/useStores";
 
-// データ
-const stores = ref<Store[]>([]);
+// データ（composable から取得）
+const {
+  stores,
+  searchQuery,
+  selectedCategory,
+  categoryOptions,
+  filteredStores,
+  getCategoryIcon,
+  loadSampleData,
+} = useStores();
 const selectedStore = ref<Store | null>(null);
-const searchQuery = ref("");
-const selectedCategory = ref<StoreCategory | null>(null);
 const showStoreDetail = ref(false);
 const showAbout = ref(false);
 
@@ -231,53 +238,13 @@ declare const google: any;
 let map: any = null;
 let markers: any[] = [];
 
-// カテゴリオプション
-const categoryOptions = [
-  { title: "インドカレー", value: "インドカレー" },
-  { title: "欧風カレー", value: "欧風カレー" },
-  { title: "スープカレー", value: "スープカレー" },
-  { title: "スパイスカレー", value: "スパイスカレー" },
-  { title: "その他", value: "その他" },
-];
-
-// フィルタリングされた店舗リスト
-const filteredStores = computed(() => {
-  let filtered = stores.value;
-
-  // 検索クエリでフィルタ
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-    filtered = filtered.filter(
-      (store: Store) =>
-        store.name.toLowerCase().includes(query) ||
-        store.address.toLowerCase().includes(query) ||
-        store.category.toLowerCase().includes(query)
-    );
-  }
-
-  // カテゴリでフィルタ
-  if (selectedCategory.value) {
-    filtered = filtered.filter(
-      (store: Store) => store.category === selectedCategory.value
-    );
-  }
-
-  return filtered;
-});
-
-// カテゴリアイコン取得
-const getCategoryIcon = (category: StoreCategory): string => {
-  const icons: Record<StoreCategory, string> = {
-    インドカレー: "🍛",
-    欧風カレー: "🥘",
-    スープカレー: "🍲",
-    スパイスカレー: "🌶️",
-    その他: "🍽️",
-  };
-  return icons[category] || "🍽️";
-};
+// フィルタリングとアイコン取得は useStores に委譲
 
 // Google Maps初期化
+/**
+ * @description Google Maps初期化
+ * @returns {void}
+ */
 const initMap = () => {
   const mapElement = document.getElementById("map");
   if (!mapElement) return;
@@ -302,6 +269,18 @@ const initMap = () => {
 };
 
 // マーカー作成
+/**
+ * @description 店舗データを元にマーカー（ピン）を作成する関数です
+ * @param {Store[]} stores - 店舗データ
+ * @param {google.maps.Map} map - Google Mapsインスタンス
+ * @param {Function} getCategoryIcon - カテゴリアイコンを取得する関数
+ * @param {Function} selectStore - 店舗選択関数
+ * @param {Function} markers - マーカー配列
+ * @param {Function} marker - マーカーインスタンス
+ * @param {Function} marker.addListener - マーカークリックイベントリスナーを追加する関数
+ * @param {Function} marker.setMap - マーカーを地図に追加する関数
+ * @returns {void}
+ */
 const createMarkers = () => {
   if (!map) return;
 
@@ -339,6 +318,17 @@ const createMarkers = () => {
 };
 
 // 店舗選択
+/**
+ * @description 店舗選択
+ * @param {Store} store - 店舗データ
+ * @param {Ref<Store | null>} selectedStore - 選択された店舗データ
+ * @param {Ref<boolean>} showStoreDetail - 店舗詳細モーダルの表示状態
+ * @param {google.maps.Map} map - Google Mapsインスタンス
+ * @param {Function} hasGoogleMapsApiKey - Google Maps API Keyの確認
+ * @param {Function} loadInstagramEmbed - Instagram埋め込み読み込み
+ * @param {Function} loadSampleData - サンプルデータ読み込み
+ * @returns {void}
+ */
 const selectStore = (store: Store) => {
   selectedStore.value = store;
   showStoreDetail.value = true;
@@ -373,39 +363,7 @@ const loadInstagramEmbed = (instagramUrl: string) => {
   }, 1000);
 };
 
-// サンプルデータ（実際の実装ではサーバーAPIから取得）
-const loadSampleData = () => {
-  stores.value = [
-    {
-      id: "1",
-      name: "カレー屋 サンプル1",
-      address: "東京都渋谷区道玄坂1-2-3",
-      lat: 35.658,
-      lng: 139.7016,
-      category: "インドカレー",
-      comment: "本格的なインドカレーが楽しめます",
-      instagramUrl: "https://www.instagram.com/p/sample1",
-    },
-    {
-      id: "2",
-      name: "欧風カレー専門店",
-      address: "東京都新宿区歌舞伎町1-1-1",
-      lat: 35.6938,
-      lng: 139.7034,
-      category: "欧風カレー",
-      comment: "とろけるルーが自慢の欧風カレー",
-    },
-    {
-      id: "3",
-      name: "スープカレー 北海道",
-      address: "東京都港区六本木3-2-1",
-      lat: 35.6654,
-      lng: 139.7296,
-      category: "スープカレー",
-      comment: "北海道の味を東京で",
-    },
-  ];
-};
+// サンプルデータ読み込みは useStores に委譲
 
 // フィルタ変更時のマーカー更新
 watch([searchQuery, selectedCategory], () => {
