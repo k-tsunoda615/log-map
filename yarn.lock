@@ -511,6 +511,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/roboto@npm:^5.2.6":
+  version: 5.2.6
+  resolution: "@fontsource/roboto@npm:5.2.6"
+  checksum: 10c0/a2fbadf2f3b8ebb859e7b13ad82d25e8b43901c30ad93b08095c201617fcfded279d99e64a7b110614d2a1b5bca77631df7d009abf1ad6c6a4df301ceb330a51
+  languageName: node
+  linkType: hard
+
 "@ioredis/commands@npm:^1.3.0":
   version: 1.3.1
   resolution: "@ioredis/commands@npm:1.3.1"
@@ -4742,6 +4749,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nuxt-app@workspace:."
   dependencies:
+    "@fontsource/roboto": "npm:^5.2.6"
     "@mdi/font": "npm:^7.4.47"
     nuxt: "npm:^4.1.0"
     vite-plugin-vuetify: "npm:^2.1.2"
