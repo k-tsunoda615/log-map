@@ -28,6 +28,7 @@ const props = defineProps<{
   stores: Store[];
   apiKeyExists: boolean;
   getCategoryIcon: (category: Store["category"]) => string;
+  selectedStore: Store | null;
 }>();
 const emit = defineEmits<{ (e: "select", store: Store): void }>();
 
@@ -140,6 +141,15 @@ watch(
   () => props.stores,
   () => {
     createMarkers();
+  }
+);
+
+watch(
+  () => props.selectedStore,
+  (store) => {
+    if (!map || !store) return;
+    if (map?.setCenter) map.setCenter({ lat: store.lat, lng: store.lng });
+    if (map?.setZoom) map.setZoom(16);
   }
 );
 

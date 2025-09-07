@@ -41,6 +41,7 @@
               :stores="filteredStores"
               :api-key-exists="hasGoogleMapsApiKey"
               :get-category-icon="getCategoryIcon"
+              :selected-store="selectedStore"
               @select="selectStore"
             />
           </v-col>
@@ -48,7 +49,11 @@
       </v-container>
     </v-main>
 
-    <StoreDetailContainer :store="selectedStore" v-model="showStoreDetail" />
+    <StoreDetailContainer
+      :key="selectedStore?.id || 'empty'"
+      :store="selectedStore"
+      v-model="showStoreDetail"
+    />
 
     <v-dialog v-model="showAbout" max-width="500px">
       <v-card>

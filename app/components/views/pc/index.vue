@@ -104,6 +104,7 @@
               :stores="filteredStores"
               :api-key-exists="hasGoogleMapsApiKey"
               :get-category-icon="getCategoryIcon"
+              :selected-store="selectedStore"
               @select="selectStore"
             />
           </v-col>
@@ -111,6 +112,7 @@
           <!-- 右: 詳細 -->
           <v-col cols="12" lg="3" class="d-none d-lg-block">
             <StoreDetailContainer
+              :key="selectedStore?.id || 'empty'"
               :store="selectedStore"
               v-model="showStoreDetail"
             />
